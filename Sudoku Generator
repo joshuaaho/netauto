@@ -434,9 +434,9 @@ void TransferAnswerKeyToAnswerKeyVec(map <string,int> &AnswerKey){
 
 void ExitGame(){
 
-  cout<<"Any Game Progress Has Been Saved"<<endl;
+  cout<<"Any Game Progress Has Been Saved"<<endl<<endl;
 
-  cout<<"Thanks For Playing"<<endl;
+  cout<<"Thanks For Playing"<<endl<<endl;
 
   exit(4);
 
@@ -466,8 +466,8 @@ int main(){
 
   cout<<"Welcome To Sudoku!"<<endl<<"*****************************************"<<endl<<"Type 1 To Start A New Game"<<endl<<
   "Type 2 To Continue From The Previous Game"<<endl<<"Type 3 To Quit"<<endl<<"*****************************************"<<endl
-  <<"Remarks: Game Will Automatically Save Itself"<<endl<<"         "<<"If This Is Your First Time Playing, Please Create A New Game"<<endl<<"         "<<"Once The Game Has Started, Please Exit "<<
-  "The Terminal To Quit"<<endl<<endl;
+  <<"Remarks: Game Will Automatically Save Itself"<<endl<<"         "<<"If This Is Your First Time Playing, Please Create A New Game"<<endl<<"         "<<"Once The Game Has Started, Please Type "<<
+  "\"Quit 0\" in Order To Quit"<<endl<<endl;
 
   cout<<"Rules : Each Number [1-9] Must And Can Only Appear Once In A Row, Column Or Box"<<endl<<
   "        "<<"Please Type Your Inputs In The Following Format -> Position Digit e.g. A3 4"<<endl<<endl;
@@ -601,6 +601,12 @@ int main(){
 
         }
 
+        if (UserInputPosition == "Quit" && UserAnswer == 0){
+
+          ExitGame();
+
+        }
+
         if (AnswerKey.count(UserInputPosition) == 1){
 
           if ( AnswerKey[UserInputPosition] == UserAnswer){
@@ -676,6 +682,12 @@ int main(){
 
           }
 
+          if (UserInputPosition == "Quit" && UserAnswer == 0){
+
+            ExitGame();
+
+          }
+
           if (AnswerKey.count(UserInputPosition) == 1){
 
             if ( AnswerKey[UserInputPosition] == UserAnswer){
@@ -723,6 +735,7 @@ int main(){
       if ( Command == 3){
 
         ExitGame();
+
       }
 
     }
