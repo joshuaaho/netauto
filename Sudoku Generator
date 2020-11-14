@@ -1,0 +1,734 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <fstream>
+#include <map>
+#include <sstream>
+#include <iomanip>
+using namespace std;
+
+void ShuffleVec(vector <int> &vec){
+
+  for (int i=0;i<vec.size();i++){
+
+    int index = rand()%vec.size();
+
+    int temp=vec[i];
+
+    vec[i]=vec[index];
+
+    vec[index]=temp;
+
+  }
+
+}
+
+void Shift3(vector <int> &vec){
+
+  vec.push_back(vec[0]);
+  vec.push_back(vec[1]);
+  vec.push_back(vec[2]);
+
+  for (int i=0;i<3;i++){
+
+    vec.erase(vec.begin());
+
+  }
+
+}
+
+void Shift1(vector <int> &vec){
+
+  vec.push_back(vec[0]);
+
+  vec.erase(vec.begin());
+
+}
+///Fill the board
+void FillBoard(int BoardGame[][10],vector <int> &Array2){
+
+  ShuffleVec(Array2);
+
+  vector<int> RowTwo;
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[1][i]=Array2[i-1];
+      RowTwo.push_back(Array2[i-1]);
+
+  }
+
+  Shift3(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[2][i]=RowTwo[i-1];
+
+
+  }
+
+  Shift3(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[3][i]=RowTwo[i-1];
+
+
+  }
+
+  Shift1(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[4][i]=RowTwo[i-1];
+
+
+  }
+
+  Shift3(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[5][i]=RowTwo[i-1];
+
+
+  }
+
+  Shift3(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[6][i]=RowTwo[i-1];
+
+
+  }
+
+  Shift1(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[7][i]=RowTwo[i-1];
+
+
+  }
+
+  Shift3(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[8][i]=RowTwo[i-1];
+
+
+  }
+
+  Shift3(RowTwo);
+
+  for (int i=1;i<10;i++){
+
+      BoardGame[9][i]=RowTwo[i-1];
+
+
+  }
+
+
+}
+//To make sure the player gets a different set everytime (ShuffleColumns and
+//ShuffleRows)
+void ShuffleColumns(int BoardGame[][10]){
+
+  vector<int> vec1={1,2,3};
+
+  ShuffleVec(vec1);
+
+  int temp1[4]={0,0,0,0};
+
+  for (int i=1;i<10;i++){
+
+    temp1[1]=BoardGame[i][1];
+    temp1[2]=BoardGame[i][2];
+    temp1[3]=BoardGame[i][3];
+
+    BoardGame[i][1]=temp1[vec1[0]];
+
+    BoardGame[i][2]=temp1[vec1[1]];
+
+    BoardGame[i][3]=temp1[vec1[2]];
+
+  }
+
+  vector<int> vec2={4,5,6};
+
+  ShuffleVec(vec2);
+
+  int temp2[7]={0,0,0,0,0,0,0};
+
+  for (int i=1;i<10;i++){
+
+    temp2[4]=BoardGame[i][4];
+    temp2[5]=BoardGame[i][5];
+    temp2[6]=BoardGame[i][6];
+
+    BoardGame[i][4]=temp2[vec2[0]];
+
+    BoardGame[i][5]=temp2[vec2[1]];
+
+    BoardGame[i][6]=temp2[vec2[2]];
+
+  }
+
+  vector<int> vec3={7,8,9};
+
+  ShuffleVec(vec3);
+
+  int temp3[10]={0,0,0,0,0,0,0,0,0,0};
+
+  for (int i=1;i<10;i++){
+
+    temp3[7]=BoardGame[i][7];
+    temp3[8]=BoardGame[i][8];
+    temp3[9]=BoardGame[i][9];
+
+    BoardGame[i][7]=temp3[vec3[0]];
+
+    BoardGame[i][8]=temp3[vec3[1]];
+
+    BoardGame[i][9]=temp3[vec3[2]];
+
+  }
+
+}
+
+void ShuffleRows(int BoardGame[][10]){
+
+  vector<int> vec1={1,2,3};
+
+  ShuffleVec(vec1);
+
+  int temp1[4]={0,0,0,0};
+
+  for (int i=1;i<10;i++){
+
+    temp1[1]=BoardGame[1][i];
+    temp1[2]=BoardGame[2][i];
+    temp1[3]=BoardGame[3][i];
+
+    BoardGame[1][i]=temp1[vec1[0]];
+
+    BoardGame[2][i]=temp1[vec1[1]];
+
+    BoardGame[3][i]=temp1[vec1[2]];
+
+  }
+
+  vector<int> vec2={4,5,6};
+
+  ShuffleVec(vec2);
+
+  int temp2[7]={0,0,0,0,0,0,0};
+
+  for (int i=1;i<10;i++){
+
+    temp2[4]=BoardGame[4][i];
+    temp2[5]=BoardGame[5][i];
+    temp2[6]=BoardGame[6][i];
+
+    BoardGame[4][i]=temp2[vec2[0]];
+
+    BoardGame[5][i]=temp2[vec2[1]];
+
+    BoardGame[6][i]=temp2[vec2[2]];
+
+  }
+
+  vector<int> vec3={7,8,9};
+
+  ShuffleVec(vec3);
+
+  int temp3[10]={0,0,0,0,0,0,0,0,0,0};
+
+  for (int i=1;i<10;i++){
+
+    temp3[7]=BoardGame[7][i];
+    temp3[8]=BoardGame[8][i];
+    temp3[9]=BoardGame[9][i];
+
+    BoardGame[7][i]=temp3[vec3[0]];
+
+    BoardGame[8][i]=temp3[vec3[1]];
+
+    BoardGame[9][i]=temp3[vec3[2]];
+
+  }
+
+
+
+}
+
+void UpdateAnswerKeyFile(map <string,int> AnswerKey){
+
+  ofstream output;
+
+  output.open("AnswerKey.txt");
+
+  map <string,int>::iterator itr1;
+
+  for (itr1 = AnswerKey.begin();itr1 != AnswerKey.end();itr1++){
+
+    output << (*itr1).first <<" "<< (*itr1).second << endl;
+
+  }
+
+  output.close();
+
+}
+
+void UpdateGameStatusFile(vector <int> BoardGame2){
+
+  ofstream output;
+
+  output.open("GameStatus.txt");
+
+  int index=0;
+
+  for (int i=0;i<9;i++){
+
+    for (int j=0;j<9;j++){
+
+      output<<BoardGame2[index]<<" ";
+
+      index++;
+
+    }
+
+    output<<endl;
+
+  }
+
+  output.close();
+
+}
+
+void UpdateBoardGame2(vector <int> &BoardGame2,map <int,string> Map1, string UserInputPosition, int UserAnswer){
+
+  map <int,string>::iterator itr;
+
+  for (itr = Map1.begin();itr != Map1.end();itr++){
+
+    if ( (*itr).second == UserInputPosition){
+
+      BoardGame2[(*itr).first]=UserAnswer;
+    }
+
+  }
+
+}
+
+void PrintGame(){
+
+  int a,i=0;
+
+  char letter='A';
+
+  cout<<"   "<<1;
+
+  for (int i=2;i<10;i++){
+
+    cout<<fixed<<setw(2)<<i;
+
+  }
+
+  cout<<endl<<endl;
+
+  ifstream input;
+
+  input.open("GameStatus.txt");
+
+  string NumberLine;
+
+  while (getline(input,NumberLine)){
+
+    letter='A'+i;
+
+    cout<<letter<<" ";
+
+    i++;
+
+    istringstream line_in(NumberLine);
+
+    while (line_in >> a ){
+
+      if ( a != 0){
+
+      cout<<fixed<<setw(2)<<a;
+
+      }
+
+      else{
+
+        cout<<fixed<<setw(2)<<" ";
+      }
+
+    }
+
+    cout<<endl;
+
+  }
+
+  cout<<endl;
+
+  input.close();
+
+}
+
+void TransferGameStatusToBoardGame2(vector <int> &BoardGame2){
+
+  ifstream input;
+
+  input.open("GameStatus.txt");
+
+  string NumberLine;
+
+  while (getline(input,NumberLine)){
+
+    istringstream line_in(NumberLine);
+
+    int a;
+
+    while (line_in >> a ){
+
+      BoardGame2.push_back(a);
+
+    }
+
+  }
+
+  input.close();
+
+}
+
+void TransferAnswerKeyToAnswerKeyVec(map <string,int> &AnswerKey){
+
+  ifstream input;
+
+  string NumberLine;
+
+  input.open("AnswerKey.txt");
+
+  while (getline(input,NumberLine)){
+
+    istringstream line_in(NumberLine);
+
+    string b;
+
+    int c;
+
+    while (line_in >> b >> c ){
+
+      AnswerKey [b] = c;
+    }
+
+  }
+
+}
+
+void ExitGame(){
+
+  cout<<"Any Game Progress Has Been Saved"<<endl;
+
+  cout<<"Thanks For Playing"<<endl;
+
+  exit(4);
+
+}
+
+int main(){
+
+  map <int,string> Map1 ;
+
+  string Array1 []={"A1","A2","A3","A4","A5","A6","A7","A8","A9",
+  "B1","B2","B3","B4","B5","B6","B7","B8","B9",
+  "C1","C2","C3","C4","C5","C6","C7","C8","C9",
+  "D1","D2","D3","D4","D5","D6","D7","D8","D9",
+  "E1","E2","E3","E4","E5","E6","E7","E8","E9",
+  "F1","F2","F3","F4","F5","F6","F7","F8","F9",
+  "G1","G2","G3","G4","G5","G6","G7","G8","G9",
+  "H1","H2","H3","H4","H5","H6","H7","H8","H9",
+  "I1","I2","I3","I4","I5","I6","I7","I8","I9"};
+
+  for (int i=0;i<81;i++){
+
+    Map1 [i] = Array1[i];
+
+  }
+
+  int Command;
+
+  cout<<"Welcome To Sudoku!"<<endl<<"*****************************************"<<endl<<"Type 1 To Start A New Game"<<endl<<
+  "Type 2 To Continue From The Previous Game"<<endl<<"Type 3 To Quit"<<endl<<"*****************************************"<<endl
+  <<"Remarks: Game Will Automatically Save Itself"<<endl<<"         "<<"If This Is Your First Time Playing, Please Create A New Game"<<endl<<"         "<<"Once The Game Has Started, Please Exit "<<
+  "The Terminal To Quit"<<endl<<endl;
+
+  cout<<"Rules : Each Number [1-9] Must And Can Only Appear Once In A Row, Column Or Box"<<endl<<
+  "        "<<"Please Type Your Inputs In The Following Format -> Position Digit e.g. A3 4"<<endl<<endl;
+
+  cout<<"This Game Was Created By Ho Joshua And Chen Hsin-Mei (Group 115), We Hope You Enjoy!"<<endl<<endl;
+
+
+
+  while (!(cin>>Command) || (Command < 1 || Command > 3)){
+
+    cin.clear();
+
+    cin.ignore(100000,'\n');
+
+    cout<<"Your Input Is Invalid"<<endl;
+
+    cout<<"Please Try Again"<<endl;
+
+  }
+
+  if (Command == 1){
+//___________________________________________________________________________//
+//CREATE NEW PUZZLE
+
+    srand(time(0));
+
+    int BoardGame [10][10];
+
+    vector<int> Array2={1,2,3,4,5,6,7,8,9};
+
+    FillBoard(BoardGame,Array2);
+
+    ShuffleColumns(BoardGame);
+
+    ShuffleRows(BoardGame);
+
+
+//___________________________________________________________________________//
+//MOVE ALL ELEMENTS IN BOARDGAME (10x10 array) TO BOARDGAME2 (a vector) TO MANIPULATE
+
+    vector <int> BoardGame2;
+
+    for (int i=1;i<10;i++){
+
+      for (int j=1;j<10;j++){
+
+        BoardGame2.push_back(BoardGame[i][j]);
+
+      }
+
+    }
+
+//CREATE A VECTOR WITH THE POSITIONS OF THE GAME IN IT e.g. A1 = position 1,
+// A2 = position 2....
+
+    vector<int> PositionVector;
+
+    for (int i=0;i<81;i++){
+
+      PositionVector.push_back(i);
+
+    }
+
+//CHOOSE RANDOM POSITIONS TO BE BLANKED
+
+    ShuffleVec(PositionVector);
+
+//ASK USER FOR MANY CLUES / BLANKED SPOTS THEY WANT
+
+    int NumberOfBlanks;
+
+    cout<<"How Many Blanks Do You Want?"<<endl;
+
+    cout<<"(The Maximum Number Of Blanks Can Only Be 64 or 17 Minimum Clues For A Puzzle With Only 1 Solution)"<<endl<<endl;
+
+    while (!(cin>>NumberOfBlanks) || NumberOfBlanks > 64){
+
+      cin.clear();
+
+      cin.ignore(100000,'\n');
+
+      cout<<"Your Input Is Invalid"<<endl;
+
+      cout<<"Please Try Again"<<endl<<endl;
+
+    }
+
+//CREATE THE ANSWERKEY TO CHECK USER INPUT IF IT IS CORRECT
+//CHANGE TO 0 FOR THE NUMBERS THAT THE USER HAS TO SOLVE
+
+    map <string,int> AnswerKey;
+
+    for (int i=0;i<NumberOfBlanks;i++){
+
+      AnswerKey[Map1[PositionVector[i]]]= BoardGame2[PositionVector[i]];
+
+      BoardGame2[PositionVector[i]]=0;
+
+    }
+
+//SAVE THE ANSWERKEY OF THE NEWLY CREATED GAME IN "AnswerKey.txt"
+
+    UpdateAnswerKeyFile(AnswerKey);
+
+//SAVE THE NEWLY CREATED GAME in "GameStatus.txt"
+
+    UpdateGameStatusFile(BoardGame2);
+
+//PRINT OUT THE NEWLY CREATED GAME
+//BLANKS WILL BE PRINTED FOR THE NUMBERS THE USER HAS TO SOLVE
+
+    PrintGame();
+
+//ASK FOR USER INPUT
+
+    int RemainingBlanks = AnswerKey.size();
+
+    string UserInputPosition;
+
+    int UserAnswer;
+
+      while (RemainingBlanks > 0){
+
+        while (!(cin>>UserInputPosition>>UserAnswer)){
+
+          cout<<"Please Input The Correct Datatypes"<<endl<<endl;
+
+          cin.clear();
+
+          cin.ignore(10000,'\n');
+
+        }
+
+        if (AnswerKey.count(UserInputPosition) == 1){
+
+          if ( AnswerKey[UserInputPosition] == UserAnswer){
+
+            RemainingBlanks--;
+
+            cout<<"You Have "<<RemainingBlanks<<" Blanks Left To Finish"<<endl<<endl;
+
+            UpdateBoardGame2(BoardGame2,Map1,UserInputPosition,UserAnswer);
+
+            AnswerKey.erase(UserInputPosition);
+
+            UpdateAnswerKeyFile(AnswerKey);
+
+            UpdateGameStatusFile(BoardGame2);
+
+            PrintGame();
+
+            if (RemainingBlanks == 0){
+
+              cout<<"You Have Completed The Puzzle, Great Job!"<<endl;
+            }
+
+          }
+
+          else{
+
+            cout<<"You Are Wrong Please Try Again"<<endl<<endl;
+          }
+
+        }
+
+        else{
+
+          cout<<"Please Solve For The Unsolved Position"<<endl<<endl;
+
+        }
+
+      }
+
+    }
+
+
+  else{
+
+    if ( Command == 2){
+
+      map <string,int> AnswerKey;
+
+      vector <int> BoardGame2;
+
+      PrintGame();
+
+      TransferGameStatusToBoardGame2(BoardGame2);
+
+      TransferAnswerKeyToAnswerKeyVec(AnswerKey);
+
+      int RemainingBlanks = AnswerKey.size();
+
+      string UserInputPosition;
+
+      int UserAnswer;
+
+        while (RemainingBlanks > 0){
+
+          while (!(cin>>UserInputPosition>>UserAnswer)){
+
+            cout<<"Please Input The Correct Datatypes"<<endl<<endl;
+
+            cin.clear();
+
+            cin.ignore(10000,'\n');
+
+          }
+
+          if (AnswerKey.count(UserInputPosition) == 1){
+
+            if ( AnswerKey[UserInputPosition] == UserAnswer){
+
+              RemainingBlanks--;
+
+              cout<<"You Have "<<RemainingBlanks<<" Blanks Left To Finish"<<endl<<endl;
+
+              UpdateBoardGame2(BoardGame2,Map1,UserInputPosition,UserAnswer);
+
+              AnswerKey.erase(UserInputPosition);
+
+              UpdateAnswerKeyFile(AnswerKey);
+
+              UpdateGameStatusFile(BoardGame2);
+
+              PrintGame();
+
+              if (RemainingBlanks == 0){
+
+                cout<<"You Have Completed The Puzzle, Great Job!"<<endl;
+              }
+
+            }
+
+            else{
+
+              cout<<"You Are Wrong Please Try Again"<<endl<<endl;
+            }
+
+          }
+
+          else{
+
+            cout<<"Please Solve For The Unsolved Position"<<endl<<endl;
+
+        }
+
+      }
+
+    }
+
+    else{
+
+      if ( Command == 3){
+
+        ExitGame();
+      }
+
+    }
+
+  }
+
+}
+
+//___________________________________________________________________________//
